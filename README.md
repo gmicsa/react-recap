@@ -18,7 +18,7 @@ interface GreetingProps {
   messageCount?: number; // Optional prop
 }
 
-// Method 1: Type props directly (Recommended) [3, 12]
+// Method 1: Type props directly (Recommended)
 const Greeting = ({ name, messageCount = 0 }: GreetingProps): JSX.Element => {
   return (
     <div>
@@ -28,8 +28,8 @@ const Greeting = ({ name, messageCount = 0 }: GreetingProps): JSX.Element => {
   );
 };
 
-// Method 2: Using React.FC (FunctionComponent) [3, 13, 20, 21]
-// Note: Less common now, especially since React 18 removed implicit children. [12, 13]
+// Method 2: Using React.FC (FunctionComponent) 
+// Note: Less common now, especially since React 18 removed implicit children.
 const GreetingFC: React.FC<GreetingProps> = ({ name, messageCount = 0 }) => {
   // children prop is available if needed, but must be explicitly typed in Props
   return (
@@ -63,10 +63,10 @@ const Counter: React.FC = () => {
   // Type inferred as number
   const [count, setCount] = useState(0);
 
-  // Explicit type needed for null initial value or union types [1, 8]
+  // Explicit type needed for null initial value or union types
   const [user, setUser] = useState<{ name: string } | null>(null);
 
-  // Type union example [1]
+  // Type union example 
   type Status = 'idle' | 'loading' | 'success' | 'error';
   const [status, setStatus] = useState<Status>('idle');
 
@@ -148,7 +148,7 @@ interface ThemeContextType {
   toggleTheme: () => void;
 }
 
-// Create context with a default value (or null if no sensible default) [1]
+// Create context with a default value (or null if no sensible default)
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
 // Create a Provider component
@@ -205,10 +205,10 @@ Accesses DOM elements directly or stores mutable values that don't trigger re-re
 import React, { useRef, useEffect, useState } from 'react';
 
 const RefExample: React.FC = () => {
-  // Ref for DOM element [10, 16, 18]
+  // Ref for DOM element
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Ref for a mutable value (e.g., timer ID, previous value) [10, 17]
+  // Ref for a mutable value (e.g., timer ID, previous value)
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [count, setCount] = useState(0);
 
@@ -263,7 +263,7 @@ type CounterAction =
 // Initial state
 const initialState: CounterState = { count: 0 };
 
-// Reducer function [1]
+// Reducer function
 function reducer(state: CounterState, action: CounterAction): CounterState {
   switch (action.type) {
     case 'INCREMENT':
@@ -552,17 +552,17 @@ import React, { Suspense, use } from 'react';
 // Assume fetchMessage returns a Promise<string>
 declare function fetchMessage(): Promise<string>;
 
-// This component will suspend while the promise is pending [9]
+// This component will suspend while the promise is pending
 const MessageComponent: React.FC<{ messagePromise: Promise<string> }> = ({ messagePromise }) => {
-  // 'use' unwraps the promise value once resolved [6, 9]
+  // 'use' unwraps the promise value once resolved
   const message = use(messagePromise);
   return <p>Message: {message}</p>;
 };
 
 // Example Usage
 const UseHookExample: React.FC = () => {
-  // IMPORTANT: Promises passed from Server Components are stable across re-renders. [9]
-  // Promises created in Client Components are recreated on every render, potentially causing infinite loops without memoization. [9]
+  // IMPORTANT: Promises passed from Server Components are stable across re-renders.
+  // Promises created in Client Components are recreated on every render, potentially causing infinite loops without memoization.
   // For client-side fetching with 'use', manage the promise state carefully (e.g., with useState + useEffect or a library).
   const messagePromise = fetchMessage(); // In a real app, manage this promise's lifecycle
 
@@ -576,8 +576,8 @@ const UseHookExample: React.FC = () => {
   );
 };
 
-// NOTE: 'use' must be called inside a Component or another Hook. [9]
-// NOTE: In Server Components, prefer async/await over 'use' for data fetching. [9]
+// NOTE: 'use' must be called inside a Component or another Hook.
+// NOTE: In Server Components, prefer async/await over 'use' for data fetching.
 
 export default UseHookExample;
 
